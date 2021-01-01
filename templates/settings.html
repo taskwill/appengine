@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <script src="{{ static }}/settings.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div v-if="user" v-cloak>
+                <div style="height: 3em;"></div>
+                <div class="ceiling slim walls" v-cloak>
+                    <a href="/guides"><div class="floor widepad">Guides</div></a>
+                    <!--<a href="/exchange"><div class="floor widepad">Exchange</div></a>-->
+                    <a href="/trash"><div class="floor widepad">Trash can</div></a>
+                    <a href="/payments"><div class="floor widepad">Payments</div></a>
+                    <a href="/data"><div class="floor widepad">Download your data</div></a>
+                    <a href="/accounts"><div class="floor widepad">Account settings</div></a>
+                    <a href="/affiliate"><div class="floor widepad">Affiliate programs</div></a>
+                    <a href="/terms"><div class="floor widepad">Terms of service</div></a>
+                    <a href="/privacy"><div class="floor widepad">Privacy policy</div></a>
+                    <button class="floor widepad white wide" @click="logout()">Log out</button>
+                </div>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <div class="center forth widepads"><i class="material-icons">settings</i></div>
+                </div>
+            </div>
+        </div>{% endblock %}

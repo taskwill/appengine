@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        <script src="https://www.paypal.com/sdk/js?client-id="></script>
+        <script src="{{ static }}/payments.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div style="height: 3em;"></div>
+            <div class="slim ceiling walls">
+                <input type="radio" name="amount" id="1" value="1.00" v-model="amount">
+                <label class="floor pad split pay_usd" for="1"><div>TWC 1</div><div>USD 1</div></label>
+                <input type="radio" name="amount" id="5" value="5.00" v-model="amount">
+                <label class="floor pad split pay_usd" for="5"><div>TWC 5</div><div>USD 5</div></label>
+                <input type="radio" name="amount" id="10" value="10.00" v-model="amount">
+                <label class="floor pad split pay_usd" for="10"><div>TWC 10</div><div>USD 10</div></label>
+                <input type="radio" name="amount" id="50" value="50.00" v-model="amount">
+                <label class="floor pad split pay_usd" for="50"><div>TWC 50</div><div>USD 50</div></label>
+                <input type="radio" name="amount" id="100" value="100.00" v-model="amount">
+                <label class="floor pad split pay_usd" for="100"><div>TWC 100</div><div>USD 100</div></label>
+            </div>
+            <div id="paypal" class="slim pad"></div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

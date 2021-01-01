@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Tasks{% endblock %}
+{% block head %}
+        <script src="{{ static }}/tasks.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div v-if="user" v-cloak>
+                <div class="floor" style="height: 3em;"></div>
+                <div class="floor"><div class="slim walls"><button class="pad wide" @click="create"><i class="material-icons">add</i></button></div></div>
+                <div class="floor" v-for="task in tasks" v-cloak>
+                    <div class="walls slim" :id="task.task_id">
+                        <div class="contents floor" v-html="convert(task.request_contents)"></div>
+                        <div class="contents editor pad" @click="edit(task.task_id)" v-html="convert(task.task_contents)"></div>
+                        <textarea style="display: none;" @input="resize($event)" spellcheck="false" v-model="task.task_contents"></textarea>
+                        <button class="ceiling pads wide" style="display: none;" @click="update(task.task_id)"><i class="material-icons">save</i></button>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <div class="center forth widepads"><i class="material-icons">comment</i></div>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

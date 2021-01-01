@@ -1,0 +1,5 @@
+dispatch:
+  - url: "taskwill.com/"
+    service: default
+  - url: "taskwill.org/"
+    service: org

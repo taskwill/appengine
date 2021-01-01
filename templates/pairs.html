@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Tasks{% endblock %}
+{% block head %}
+        <script src="{{ static }}/pairs.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div v-if="user" v-cloak>
+                <div class="floor" style="height: 3em;"></div>
+                <div v-for="pair in pairs" v-cloak>
+                    <div class="floor" :id="pair.task_id">
+                        <div class="slim walls">
+                            <div :class="{ selected: pair.which == 0 }" @click="pair.which = 0; select(pair.pair_id, 0)">
+                                <div class="contents floor"  v-html="convert(pair.zero_request_contents)"></div>
+                                <div class="contents floor" v-html="convert(pair.zero_task_contents)"></div>
+                            </div>
+                            <div :class="{ selected: pair.which == 1 }" @click="pair.which = 1; select(pair.pair_id, 1)">
+                                <div class="contents floor" v-html="convert(pair.one_request_contents)"></div>
+                                <div class="contents floor" v-html="convert(pair.one_task_contents)"></div>
+                            </div>
+                            <div style="height: 1em;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <div class="center forth widepads"><i class="material-icons">thumb_up</i></div>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

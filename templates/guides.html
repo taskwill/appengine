@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block title %}Guides{% endblock %}
+{% block head %}
+        <script src="/@19.11.16/taskwill.js"></script>
+        <style>
+            .script { overflow-x: auto; /*background-color: #333;*/ padding: 1em; margin: 1em 0; }
+            /*.script ::selection { background: white; color: black; }*/
+            .script pre { margin: 0; }
+            .script code, .script span { /*color: #ddd;*/ font-size: 14px; }
+            code, .script span { font-family: monospace, monospace; }
+            h2, h3, h4 { padding: 16px; display: box; }
+            h2 { /*border-bottom: 1px solid #ccc; border-top: 1px solid #ccc;*/ margin: 16px 0; }
+            p { padding: 0 16px;  text-align: justify; }
+        </style>
+        <script>
+            var taskwill = new TaskWill(
+                id =  "taskwill",
+                key = 'key',
+                onSuccess = function() {
+                    var hidden = document.getElementById("hidden"); hidden.style.display = "block";
+                }
+            );
+            $(function() {
+                //$('#hidden').css("display", "none"); taskwill.init();
+                var vm = new Vue({
+                    el: '#middle',
+                    data: { key: null, email: null }
+                });
+                firebase.auth().onAuthStateChanged(function(user) {
+                    vm.email = user.email;
+                    if (user && !user.isAnonymous) {
+                        user.getIdToken().then(function(userIdToken) {
+                            $.ajax({ url: '/key', type: 'GET', headers: {'Authorization': 'Bearer ' + userIdToken}
+                            }).then(function(response) {
+                                vm.key = response['key'];
+                            });
+                        });
+                    }
+                });
+            });
+        </script>{% endblock %}
+{% block content %}
+            <div class="slim">
+                <div id="taskwill"></div>
+                <div id="hidden" style="padding-bottom: 2em;">
+                    <h2>Monetize through crowdsourcing</h2>
+                    <p>
+                        Today, websites usually rely on ads for their source of revenue.
+                        But website visitors dislike ads because they are annoying.
+                        Watching ads is some of the most unprofitable things for humans.
+                    </p>
+                    <p>
+                        We introduce TaskWill, a novel crowdsourcing platform designed for rewarding websites.
+                        TaskWill is a user-friendly, versatile, and private task solving service.
+                    </p>
+                    <h2>How it works</h2>
+                    <p>
+                        Instead of showing ads, websites ask visitors to solve tasks.
+                        If the user is successful, the main content of the webpage becomes available.
+                        The popup task frame must be installed on your website.
+                    </p>
+                    <h2>Requesters</h2>
+                    <div>
+                        <h3>Markdown supported</h3>
+                        <p>
+                            Use file sharing services like Dropbox or Google Drive to attach files.
+                            Pasting images is easy with markdown.
+                        </p>
+                        <h3>The payment mechanism</h3>
+                        <p>
+                            When you pay, you must choose a deadline between 1 hour and 24 hours.
+                            The deadline does not change the expected response amount.
+                            If you cancel it, the payment is partially refunded depending on the deadline.
+                        </p>
+                        <h3>How requests are shown to workers</h3>
+                        <p>
+                            The request is not shown to workers when all payments are expired or canceled and 24 hours passed since the last work
+                            or if you remove the request.
+                            Removing a request is possible when all payments are expired or canceled.
+                        </p>
+                    </div>
+                    <h2>Developers</h2>
+                    <div>
+                        <p>You only need to load the following script.</p>
+                        <div class="script"><pre><code>https://taskwill.com/@19.11.16/taskwill.js</code></pre></div>
+                        <p v-if="!key">Sign in to view your key.</p>
+                        <p v-if="key" v-cloak>Your key is <span style="word-break: break-all;">{{'{{key}}'}}</span>.</p>
+                        <h3>Example 1</h3>
+                        <h4>Frontend</h4>
+                        <div class="script">
+<pre><code>&lt;div id=&quot;taskwill&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;hidden&quot;&gt;&lt;/div&gt;
+&lt;script&gt;
+    var taskwill = new TaskWill(
+        id = "taskwill",
+        key = <span v-if="key" v-cloak>"{{'{{key}}'}}"</span><span v-if="!key">yourKey</span>,
+        onSuccess = function(token) {
+            var url = yourBackendUrl + "?token=" + token;
+            fetch(url).then(function(response) {
+                return response.text();
+            }).then(function(data) {
+                var hidden = document.getElementById(&quot;hidden&quot;);
+                hidden.innerHTML = data;
+            });
+        }
+    );
+    taskwill.init();
+&lt;/script&gt;</code></pre>
+                        </div>
+                        <h4>Backend</h4>
+                        <div class="script"><pre><code>https://taskwill.com/api?token=token</code></pre></div>
+                        <p>usually returns</p>
+                        <div class="script"><pre><code>success</code></pre></div>
+                        <p>but sometimes</p>
+                        <div class="script"><pre><code>failure</code></pre></div>
+                        <p>is returned.</p>
+                        <p>
+                            Show your contents when <code>success</code> is returned.
+                            If you ask passwords in your website, warn users not to enter passwords.
+                        </p>
+                        <h3>Example 2</h3>
+                        <div class="script">
+<pre><code>&lt;div id=&quot;taskwill&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;hidden&quot; style="display: none;"&gt;
+    Your hidden contents.
+&lt;/div&gt;
+&lt;script&gt;
+    var taskwill = new TaskWill(
+        id = "taskwill",
+        key = <span v-if="key" v-cloak>"{{'{{key}}'}}"</span><span v-if="!key">yourKey</span>,
+        onSuccess = function(token) {
+            var hidden = document.getElementById(&quot;hidden&quot;);
+            hidden.style.display = &quot;block&quot;;
+        }
+    );
+    taskwill.init();
+&lt;/script&gt;</code></pre>
+                        </div>
+                        <p>This example code works even if you don't have a backend.</p>
+                        <h3>Payouts</h3>
+                        <div>
+                            <p>
+                                We use PayPal Payouts.
+                                You automatically receive a reward when the amount exceeds $1,000 USD.
+                                The payout is sent to your email address<span v-if="email" v-cloak> ({{'{{email}}'}})</span>.
+                                If you don't have a PayPal account with this email address, create one.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>{% endblock %}

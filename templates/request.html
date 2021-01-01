@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}TaskWill{% endblock %}
+{% block head %}
+        <script src="{{ static }}/request.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div v-if="user && request" v-cloak>
+                <div style="height: 3em;"></div>
+                <div class="ceiling slim walls" v-if="request.exists" v-cloak>
+                    <div v-if="!request.removed">
+                        <div class="floor">
+                            <div class="contents editor" v-html="convert(request.contents)"></div>
+                            <textarea @input="resize($event)" style="display: none;" spellcheck="false" v-model="request.contents"></textarea>
+                        </div>
+                        <div class="floor">
+                            <button class="pads wide" v-if="mode=='edit'" @click="edit(request.id)"><i class="material-icons">edit</i></button>
+                            <button class="pads wide" v-if="mode=='save'" @click="save(request.id)"><i class="material-icons">save</i></button>
+                        </div>
+                        <div class="center floor pad">&#128065; {{'{{request.views}}'}}</div>
+                        <div v-for="payment in payments" class="floor">
+                            <div class="split">
+                                <div class="third">
+                                    <div class="pads center" :title="new Date(payment.created).toLocaleString()">{{'{{ago(payment.created)}}'}}</div>
+                                </div>
+                                <div class="third split walls">
+                                    <div class="half"><div class="pads center">C{{'{{payment.twc}}'}}</div></div>
+                                    <div class="half"><div class="pads center">{{'{{payment.hour}}'}}h</div></div>
+                                </div>
+                                <div class="third">
+                                    <button class="pads wide" v-if="payment.refundable" @click="cancel(payment.payment_id)">
+                                        <i class="material-icons-outlined">cancel</i>
+                                    </button>
+                                    <div class="pads center" v-if="!payment.refundable"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floor">
+                            <div class="split">
+                                <div class="pads center sixth" @click="twc=null">TWC</div>
+                                <input type="radio" name="twc" id="1c" value="1" v-model="twc" v-if="request.balance >= 1">
+                                <label for="1c" v-if="request.balance >= 1">1</label>
+                                <div class="left sixth" v-if="request.balance < 1"></div>
+                                <input type="radio" name="twc" id="2c" value="2" v-model="twc" v-if="request.balance >= 2">
+                                <label for="2c" v-if="request.balance >= 2">2</label>
+                                <div class="left sixth" v-if="request.balance < 2"></div>
+                                <input type="radio" name="twc" id="5c" value="5" v-model="twc" v-if="request.balance >= 5">
+                                <label for="5c" v-if="request.balance >= 5">5</label>
+                                <div class="left sixth" v-if="request.balance < 5"></div>
+                                <input type="radio" name="twc" id="10c" value="10" v-model="twc" v-if="request.balance >= 10">
+                                <label for="10c" v-if="request.balance >= 10">10</label>
+                                <div class="left sixth" v-if="request.balance < 10"></div>
+                                <input type="radio" name="twc" id="20c" value="20" v-model="twc" v-if="request.balance >= 20">
+                                <label for="20c" v-if="request.balance >= 20">20</label>
+                                <div class="left sixth" v-if="request.balance < 20"></div>
+                            </div>
+                            <div class="ceiling">
+                                <div class="split">
+                                    <div class="pads center sixth" @click="hour=null">Hour</div>
+                                    <input type="radio" name="hour" id="1h" value="1" v-model="hour"><label for="1h">1</label>
+                                    <input type="radio" name="hour" id="3h" value="3" v-model="hour"><label for="3h">3</label>
+                                    <input type="radio" name="hour" id="6h" value="6" v-model="hour"><label for="6h">6</label>
+                                    <input type="radio" name="hour" id="12h" value="12" v-model="hour"><label for="12h">12</label>
+                                    <input type="radio" name="hour" id="24h" value="24" v-model="hour"><label for="24h">24</label>
+                                </div>
+                            </div>
+                            <div class="ceiling" v-if="hour!=null&twc!=null">
+                                <div class="split">
+                                    <button id="submit" class="wide pad" @click="submit(request.request_id, twc, hour)">
+                                        <i class="material-icons">check</i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="floor" v-for="reply in request.replies"><div class="contents pad" v-html="convert(reply.contents)"></div></div>
+                        <button class="floor wide pad" @click="remove(request.request_id)" v-if="request.removable">
+                            <i class="material-icons">delete_outline</i>
+                        </button>
+                    </div>
+                    <div class="floor split" v-else>
+                        <div class="half"><button class="pad wide" @click="restore(request.request_id)">Restore</button></div>
+                        <div class="left half"><button class="pad wide" @click="delete_forever(request.request_id)">Delete</button></div>
+                    </div>
+                </div>
+                <div style="height: 3em;"></div>
+                <div class="center pad" v-if="!request.exists" v-cloak>Deleted</div>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

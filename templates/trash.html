@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Trash{% endblock %}
+{% block head %}
+        <script src="{{ static }}/trash.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div class="floor" style="height: 3em;"></div>
+            <div class="floor" v-for="request in requests" v-cloak>
+                <a :href="'/request/'+request.request_id" class="block slim walls"><div class="contents" v-html="convert(request.contents)"></div></a>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

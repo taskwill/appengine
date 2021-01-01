@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}TaskWill{% endblock %}
+{% block head %}
+        <script src="{{ static }}/index.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans|Noto+Serif&display=swap" rel="stylesheet">{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div v-if="user==true" v-cloak>
+                <div class="floor">
+                    <div id="search" class="slim pads walls">
+                        <input id="search_box" style="padding: 0 1em;" type="search" autocomplete="off" v-model="query" @keyup.enter="search(query)">
+                    </div>
+                </div>
+                <div class="floor">
+                    <div class="slim walls"><button class="pad wide" @click="create"><i class="material-icons">add</i></button></div>
+                </div>
+                <div class="floor" v-for="request in requests" v-cloak>
+                    <a :href="'/request/'+request.request_id" class="block slim walls"><div class="contents" v-html="convert(request.contents)"></div></a>
+                </div>
+                <div style="height: 66px;"></div>
+                <div class="ceiling footer">
+                    <div class="slim split">
+                        <div class="center forth widepads"><i class="material-icons">home</i></div>
+                        <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                        <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                        <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                    </div>
+                </div>
+            </div>
+            <div v-if="user==false" v-cloak>
+                <div style="border-bottom: 1px solid #ccc; height: 3em;"></div>
+                <div style="max-width: 40em; margin: 5em auto; padding: 2em;">
+                    <div style="font-size: 2em; font-family: 'Noto Serif', serif;">TaskWill</div>
+                    <div style="height: 2em;"></div>
+                    <div style="font-family: 'Noto Sans', sans-serif;">Welcome to the future.</div>
+                    <div style="height: 10em;"></div>
+                    <div style="float: right"><button style="background-color: #555; color: white; padding: 1em; border-radius: 0.5em; font-family: 'Noto Sans', sans-serif;" @click="login()">Get started</button></div>
+                </div>
+                <div style="border-bottom: 1px solid #ccc; height: 3em;"></div>
+            </div>
+        </div>{% endblock %}

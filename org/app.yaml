@@ -1,0 +1,14 @@
+runtime: python37
+default_expiration: "1s"
+service: org
+handlers:
+- url: /.*
+  secure: always
+  script: auto
+
+env_variables:
+  FIREBASE_PROJECT_ID: 'taskwill'
+  CLOUD_SQL_USERNAME: 'root'
+  CLOUD_SQL_PASSWORD: ''
+  CLOUD_SQL_CONNECTION_NAME: 'taskwill:asia-northeast1:taskwill'
+  GCLOUD_PROJECT: 'taskwill'

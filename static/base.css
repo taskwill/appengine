@@ -1,0 +1,48 @@
+* { font-family: sans-serif; color: #555; }
+body { margin: 0; }
+a { text-decoration: none; color: #555 }
+.contents a { text-decoration: underline; }
+button { background: white; cursor: pointer; border: none; outline: none; font-size: 1em; }
+label { cursor: pointer; }
+*:focus { outline: none; }
+[v-cloak] { display:none; }
+*::selection { background: gray; color: white; }
+button::-moz-focus-inner { border: 0; }
+.main { padding: 5em 1em 5em 1em; }
+@media screen and (max-width: 500px) { .main { padding: 2em 1em; } }
+:root { --border: 1px solid #ccc; }
+.slim { max-width: 30em; margin: 0 auto; }
+.left { border-left: var(--border); }
+.right { border-right: var(--border); }
+.walls { border-left: var(--border); border-right: var(--border); }
+.ceiling { border-top: var(--border); }
+.floor { border-bottom: var(--border); }
+.pad { padding: 1em; }
+.pads { padding: 1em 0; }
+.widepads { padding: 1.5em 0; }
+.widerpads { padding: 2em 0; }
+.widepad { padding: 1.5em; }
+.split { display: flex; justify-content: space-between; }
+.center { text-align: center; }
+.wide { width: 100%; }
+.half { width: 50%; }
+.third { width: 33.33%; }
+.forth { width: 25%; }
+.sixth { width: 16.66%; }
+.contents { word-wrap: break-word; padding: 1em; min-height: 2em; }
+.block { display: block; }
+.clickable { color: #aaa; }
+input { border: none; text-align: center; width: 100%; height: 100%; font-size: 16px; }
+textarea { border: none; box-sizing: border-box; overflow: hidden; font-size: 1em; resize: none; word-wrap: break-word; line-height: 2em; padding: 1em; width: 100%; height: 4em; }
+h1, h2, h3, h4, h5, h6 { margin-top: 0em; margin-bottom: 0em; }
+p { margin: 0; line-height: 2em; }
+img { width: 100%; }
+#search_box { text-align: left; }
+input[type="radio"]:checked+label { background: #fafbfc; }/*.gray, */
+input[type="radio"] { display: none; }
+label { padding: 1em 0; text-align: center; width: 16.66%; border-left: var(--border); }
+label.pay_usd { padding: 1em; text-align: none; width: inherit; border-left: none; }
+.material-icons, .material-icons-outlined { font-size: 16px !important; }
+.header { position: fixed; top: 0; width: 100%; background: white; }
+.footer { position: fixed; bottom: 0; width: 100%; background: white; }
+.selected { background: #fafbfc; }

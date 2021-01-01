@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+        <script src="{{ static }}/accounts.js"></script>{% endblock %}
+{% block content %}
+        <div id="middle">
+            <div style="height: 3em;"></div>
+            <div class="slim walls">
+                <div class="ceiling floor"><button id="delete" class="wide pad" @click="expand_delete_account()">Delete account</button></div>
+                <div class="expanded" id="delete_details" style="display: none;">
+                    <div class="pad floor" style="line-height: 2em; text-align: justify;">
+                        Are you sure you want to delete your account forever? You cannot undo it.
+                        We recommend that you download your data.
+                    </div>
+                    <button class="floor pad wide"  style="color: #f55;" @click="leave">Delete forever</button>
+                </div>
+            </div>
+            <div style="height: 66px;"></div>
+            <div class="ceiling footer">
+                <div class="slim split">
+                    <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                    <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                    <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                    <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+                </div>
+            </div>
+        </div>{% endblock %}

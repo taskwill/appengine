@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% block head %}
+        <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.2/dist/FileSaver.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.2.2/jszip.min.js"></script>
+        <script src="{{ static }}/data.js"></script>{% endblock %}
+{% block content %}
+        <div style="height: 3em;"></div>
+        <div class="slim walls">
+            <div class="ceiling floor"><button class="wide pad" onclick="download_data()">Download your data</button></div>
+        </div>
+        <div style="height: 66px;"></div>
+        <div class="ceiling footer">
+            <div class="slim split">
+                <a class="center forth widepads" href="/"><i class="clickable material-icons">home</i></a>
+                <a class="center forth widepads" href="/tasks"><i class="clickable material-icons">comment</i></a>
+                <a class="center forth widepads" href="/pairs"><i class="clickable material-icons">thumb_up</i></a>
+                <a class="center forth widepads" href="/settings"><i class="clickable material-icons">settings</i></a>
+            </div>
+        </div>{% endblock %}
